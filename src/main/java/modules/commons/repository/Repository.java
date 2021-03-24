@@ -1,4 +1,4 @@
-package modules.commons.dao;
+package modules.commons.repository;
 
 import java.util.List;
 

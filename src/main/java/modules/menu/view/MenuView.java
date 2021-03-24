@@ -4,7 +4,8 @@ import modules.menu.controller.IMenuController;
 
 import javax.swing.*;
 
-public class MenuView extends JPanel implements IMenuView {
+
+public class MenuView implements IMenuView {
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel();
     private final JButton queriesButton = new JButton("Queries");
@@ -13,9 +14,10 @@ public class MenuView extends JPanel implements IMenuView {
 
     public MenuView(JFrame frame) {
         this.frame = frame;
-        frame.setContentPane(mainPanel);
         addButtonsToPanel();
         addActionListeners();
+        frame.setContentPane(mainPanel);
+        frame.validate();
     }
 
     private void addActionListeners() {
@@ -29,5 +31,10 @@ public class MenuView extends JPanel implements IMenuView {
 
     public void setController(IMenuController controller) {
         this.controller = controller;
+    }
+
+    @Override
+    public JFrame getJFrame() {
+        return frame;
     }
 }

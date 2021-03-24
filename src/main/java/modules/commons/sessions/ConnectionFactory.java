@@ -1,6 +1,8 @@
 package modules.commons.sessions;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import modules.commons.sessions.exceptions.ConfigurationPropertyException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +13,7 @@ import java.util.Properties;
 
 @Slf4j
 public class ConnectionFactory {
-    private static final String BD_CONNECTION_CONFIG = "connection.properties";
+    private static final String BD_CONNECTION_CONFIG = "/connection.properties";
     private static final String URL = "url";
     private static final String USER_LOGIN = "login";
     private static final String USER_PASSWORD = "password";
@@ -19,14 +21,14 @@ public class ConnectionFactory {
     private static ConnectionFactory INSTANCE = null;
 
     private String url;
+    @Getter
     private String userLogin;
     private String userPassword;
 
-    private ConnectionFactory() throws IOException {
+    private ConnectionFactory() {
 
         Properties connectionProperty = new Properties();
 
-        connectionProperty.getProperty(BD_CONNECTION_CONFIG);
         try (InputStream propertyStream =
                      ConnectionFactory.class.getResourceAsStream(BD_CONNECTION_CONFIG)) {
             connectionProperty.load(propertyStream);
@@ -35,7 +37,7 @@ public class ConnectionFactory {
             this.userPassword = connectionProperty.getProperty(USER_PASSWORD);
         } catch (IOException e) {
             log.warn(e.getMessage());
-            throw e;
+            throw new ConfigurationPropertyException(e);
         }
 
     }
@@ -44,7 +46,7 @@ public class ConnectionFactory {
         return DriverManager.getConnection(url, userLogin, userPassword);
     }
 
-    public ConnectionFactory getInstance() throws IOException {
+    public static ConnectionFactory getInstance() {
         if (INSTANCE == null) {
             synchronized (ConnectionFactory.class) {
                 if (INSTANCE == null) {

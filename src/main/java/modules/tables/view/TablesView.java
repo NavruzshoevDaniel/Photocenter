@@ -1,11 +1,13 @@
 package modules.tables.view;
 
+import lombok.extern.slf4j.Slf4j;
 import modules.tables.controller.ITablesController;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TablesView {
+@Slf4j
+public class TablesView implements ITablesView {
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new BorderLayout());
     private final JScrollPane scrollPane = new JScrollPane();
@@ -23,10 +25,18 @@ public class TablesView {
     private void configureUISettings() {
         JPanel navigationPanel = new JPanel(new GridBagLayout());
         configureNavigationPanel(navigationPanel);
+        configureButtons();
         mainPanel.add(navigationPanel, BorderLayout.NORTH);
         scrollPane.add(table);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         frame.setContentPane(mainPanel);
+        frame.validate();
+    }
+
+    private void configureButtons() {
+        menuButton.addActionListener(event -> {
+            SwingUtilities.invokeLater(() -> tablesController.routeToMenu());
+        });
     }
 
     private void configureNavigationPanel(JPanel navigationPanel) {
@@ -43,4 +53,13 @@ public class TablesView {
         navigationPanel.add(addButton, navigationConstraints);
     }
 
+    @Override
+    public void setController(ITablesController tablesController) {
+        this.tablesController = tablesController;
+    }
+
+    @Override
+    public JFrame getJFrame() {
+        return frame;
+    }
 }

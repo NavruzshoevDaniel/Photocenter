@@ -26,7 +26,7 @@ public class AuthController implements IAuthController {
         try {
             Connection connection = authService.login(ip, port, user, password);
             connection.close();
-            router.route(connection, view.getJFrame());
+            router.routeToMenu(view.getJFrame());
         } catch (SQLException throwable) {
             log.warn("", throwable);
             view.showErrorConnectMessage(throwable.getMessage());

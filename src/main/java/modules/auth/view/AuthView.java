@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 public class AuthView implements IAuthView {
     private static final String DEFAULT_BD_IP = "84.237.50.81";
     private static final String DEFAULT_BD_PORT = "1521";
+    private static final String DEFAULT_BD_USERNAME = "18204_Navruzshoev";
+    private static final String DEFAULT_BD_PASSWORD = "oracle";
     private static final int COLUMN_FIELD_SIZE = 25;
 
     private final JFrame frame;
@@ -19,8 +21,8 @@ public class AuthView implements IAuthView {
     private final JLabel portLabel = new JLabel("Port");
     private final JLabel loginLabel = new JLabel("User");
     private final JLabel passwordLabel = new JLabel("Password");
-    private final JTextField loginField = new JTextField();
-    private final JTextField passwordField = new JPasswordField();
+    private final JTextField loginField = new JTextField(DEFAULT_BD_USERNAME);
+    private final JTextField passwordField = new JPasswordField(DEFAULT_BD_PASSWORD);
     private final JButton connectButton = new JButton("Connect");
     private final JFormattedTextField ipField;
     private final JFormattedTextField portField;
@@ -35,11 +37,11 @@ public class AuthView implements IAuthView {
         setLayoutManager();
         setJComponentsSizes();
         configCredentialsPanels();
-        configButton();
+        configureButton();
         this.frame.setContentPane(authViewPanel);
     }
 
-    private void configButton() {
+    private void configureButton() {
         connectButton.addActionListener(e ->
                 authController.login(ipField.getText(), portField.getText(),
                         passwordField.getText(), loginField.getText()));
