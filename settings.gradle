@@ -1,3 +1,8 @@
 rootProject.name = 'Photocenter'
-
+include 'modules.auth'
+include 'commons'
+include 'modules.auth'
+include 'modules.clients.menu'
+include 'tables'
+include 'modules.clients'
 

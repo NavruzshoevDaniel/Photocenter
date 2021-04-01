@@ -1,4 +1,4 @@
-
+package app;
 
 import modules.auth.controller.AuthController;
 import modules.auth.controller.IAuthController;
@@ -16,19 +16,11 @@ public class Main extends JFrame {
             JFrame mainFrame = new JFrame(PROJECT_NAME);
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             mainFrame.setLocationRelativeTo(null);
-            IAuthView authView = null;
-            authView = new AuthView(mainFrame);
+            IAuthView authView = new AuthView(mainFrame);
             IAuthController authController = new AuthController(authView);
             authView.setAuthController(authController);
             mainFrame.pack();
             mainFrame.setVisible(true);
-
-          /*  JFrame mainFrame = new JFrame("example");
-            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            mainFrame.setLocationRelativeTo(null);
-            TablesView tablesView = new TablesView(mainFrame);
-            mainFrame.pack();
-            mainFrame.setVisible(true);*/
         });
     }
 }

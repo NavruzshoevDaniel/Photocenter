@@ -7,6 +7,7 @@ import modules.menu.view.IMenuView;
 import modules.menu.view.MenuView;
 
 import javax.swing.*;
+
 @Slf4j
 public class TablesRouter implements ITablesRouter {
     @Override

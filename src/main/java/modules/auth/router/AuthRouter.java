@@ -6,6 +6,7 @@ import modules.menu.controller.MenuController;
 import modules.menu.view.IMenuView;
 import modules.menu.view.MenuView;
 
+
 import javax.swing.*;
 
 @Slf4j

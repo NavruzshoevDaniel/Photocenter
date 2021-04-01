@@ -7,7 +7,6 @@ import modules.auth.service.AuthService;
 import modules.auth.service.IAuthService;
 import modules.auth.view.IAuthView;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 @Slf4j
@@ -24,8 +23,7 @@ public class AuthController implements IAuthController {
     @Override
     public void login(String ip, String port, String password, String user) {
         try {
-            Connection connection = authService.login(ip, port, user, password);
-            connection.close();
+            authService.login(ip, port, user, password);
             router.routeToMenu(view.getJFrame());
         } catch (SQLException throwable) {
             log.warn("", throwable);

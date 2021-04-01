@@ -5,6 +5,7 @@ import modules.tables.controller.ITablesController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 @Slf4j
 public class TablesView implements ITablesView {
@@ -14,7 +15,7 @@ public class TablesView implements ITablesView {
     private final JButton addButton = new JButton("Add");
     private final JButton menuButton = new JButton("Menu");
     private final JComboBox<String> tableNames = new JComboBox<>();
-    private final JTable table = new JTable();
+    private final DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
     private ITablesController tablesController;
 
     public TablesView(JFrame frame) {
@@ -24,19 +25,22 @@ public class TablesView implements ITablesView {
 
     private void configureUISettings() {
         JPanel navigationPanel = new JPanel(new GridBagLayout());
+        configureComboBox();
         configureNavigationPanel(navigationPanel);
         configureButtons();
         mainPanel.add(navigationPanel, BorderLayout.NORTH);
-        scrollPane.add(table);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         frame.setContentPane(mainPanel);
         frame.validate();
     }
 
+    private void configureComboBox() {
+        tableNames.setModel(comboBoxModel);
+    }
+
     private void configureButtons() {
-        menuButton.addActionListener(event -> {
-            SwingUtilities.invokeLater(() -> tablesController.routeToMenu());
-        });
+        menuButton.addActionListener(event -> SwingUtilities.invokeLater(
+                () -> tablesController.routeToMenu()));
     }
 
     private void configureNavigationPanel(JPanel navigationPanel) {
@@ -54,6 +58,11 @@ public class TablesView implements ITablesView {
     }
 
     @Override
+    public void init() {
+        tablesController.getTableNames();
+    }
+
+    @Override
     public void setController(ITablesController tablesController) {
         this.tablesController = tablesController;
     }
@@ -61,5 +70,20 @@ public class TablesView implements ITablesView {
     @Override
     public JFrame getJFrame() {
         return frame;
+    }
+
+    @Override
+    public void setTableColumns(List<String> allTablesNames) {
+        SwingUtilities.invokeLater(() -> {
+            allTablesNames.forEach(comboBoxModel::addElement);
+            final String selectedItem = (String) comboBoxModel.getSelectedItem();
+            log.info(selectedItem);
+            tablesController.getTable(selectedItem);
+        });
+    }
+
+    @Override
+    public void setTable(AbstractTableDataView tableView) {
+        scrollPane.getViewport().add(tableView);
     }
 }

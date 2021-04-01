@@ -1,7 +1,7 @@
 package modules.tables.repository;
 
 import lombok.extern.slf4j.Slf4j;
-import modules.commons.sessions.ConnectionFactory;
+import commons.sessions.SessionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,12 +11,13 @@ import java.util.List;
 @Slf4j
 public class TablesRepository implements ITablesRepository {
     private static final String QUERY_ALL_TABlES = "SELECT * FROM ALL_TABLES WHERE OWNER = ?";
+    private static final String COLUMN_TABLE_NAME = "TABLE_NAME";
+    private final Connection connection = SessionFactory.getInstance();
 
     @Override
     public List<String> getAllTables() {
-        String login = ConnectionFactory.getInstance().getUserLogin();
-        try (Connection connection = ConnectionFactory.getInstance().createConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(QUERY_ALL_TABlES)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_ALL_TABlES)) {
+            String login = connection.getMetaData().getUserName();
             preparedStatement.setString(1, login);
             final ResultSet resultSet = preparedStatement.executeQuery();
             return convertToTablesNamesList(resultSet);
@@ -31,8 +32,8 @@ public class TablesRepository implements ITablesRepository {
     private List<String> convertToTablesNamesList(ResultSet resultSet) throws SQLException {
         List<String> tablesNames = new ArrayList<>();
         while (resultSet.next()) {
-            String current_name = resultSet.getString("TABLE_NAME");
-            tablesNames.add(current_name);
+            String currentName = resultSet.getString(COLUMN_TABLE_NAME);
+            tablesNames.add(currentName);
         }
         return tablesNames;
     }

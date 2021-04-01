@@ -1,4 +1,4 @@
-package modules.commons.sessions.exceptions;
+package commons.sessions.exceptions;
 
 public class ConfigurationPropertyException extends RuntimeException{
     public ConfigurationPropertyException() {

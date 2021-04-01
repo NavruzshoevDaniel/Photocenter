@@ -1,6 +1,7 @@
 package modules.auth.service;
 
 import lombok.extern.slf4j.Slf4j;
+import commons.sessions.SessionFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +15,10 @@ public class AuthService implements IAuthService {
     public Connection login(String ip, String port, String userLogin, String password) throws SQLException {
         String url = "jdbc:oracle:thin:@" + ip + ":" + port + ":XE";
         DriverManager.setLoginTimeout(LOGIN_TIMEOUT);
-        return DriverManager.getConnection(url, userLogin, password);
+        Connection connection = DriverManager.getConnection(url, userLogin, password);
+        log.info(connection.getMetaData().getUserName());
+        SessionFactory.registerConnection(connection);
+        return connection;
     }
+
 }

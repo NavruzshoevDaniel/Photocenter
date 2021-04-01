@@ -17,6 +17,7 @@ public class MenuRouter implements IMenuRoute {
         ITablesView tablesView = new TablesView(frame);
         ITablesController tablesController = new TablesController(tablesView);
         tablesView.setController(tablesController);
+        tablesView.init();
         log.info("Route to 'Table' module from 'Menu' module");
     }
 }
