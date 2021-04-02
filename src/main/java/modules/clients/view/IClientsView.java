@@ -6,4 +6,6 @@ public interface IClientsView {
     void addClientRow(Object[] clients);
 
     void setColumnName(String columnsName);
+
+    void showErrorMessage(String message);
 }

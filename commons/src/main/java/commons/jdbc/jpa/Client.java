@@ -10,9 +10,8 @@ import lombok.ToString;
 @ToString
 @Setter
 public class Client {
-    @Id(name = "id")
+    @Id
     private int id;
-    @Column(columnName = "second_name")
     private String secondName;
     private String firstName;
     private String middleName;

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 //TODO::refract code
 @Slf4j
@@ -178,7 +177,6 @@ public final class RepositoryUtil {
             Class<?> fieldType = field.getType();
             Object jdbcValue = convert(rst, getFieldColumnName(field), fieldType);
             field.set(object, jdbcValue);
-            field.setAccessible(false);
         }
     }
 

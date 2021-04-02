@@ -5,13 +5,11 @@ import java.util.List;
 
 public interface Repository<T> {
 
-    T getById(long id);
+    void add(T obj) throws SQLException, IllegalAccessException;
 
-    void add(T obj);
+    void remove(T obj) throws SQLException, IllegalAccessException;
 
-    void remove(T obj);
-
-    void update(T obj);
+    void update(T obj) throws SQLException, IllegalAccessException;
 
     List<T> getAll() throws SQLException;
 }

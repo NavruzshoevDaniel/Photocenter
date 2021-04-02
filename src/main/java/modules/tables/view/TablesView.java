@@ -11,8 +11,8 @@ import java.util.List;
 public class TablesView implements ITablesView {
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new BorderLayout());
-    private final JScrollPane scrollPane = new JScrollPane();
     private final JButton addButton = new JButton("Add");
+    private final JButton removeButton = new JButton("Remove");
     private final JButton menuButton = new JButton("Menu");
     private final JComboBox<String> tableNames = new JComboBox<>();
     private final DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
@@ -29,7 +29,6 @@ public class TablesView implements ITablesView {
         configureNavigationPanel(navigationPanel);
         configureButtons();
         mainPanel.add(navigationPanel, BorderLayout.NORTH);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
         frame.setContentPane(mainPanel);
         frame.validate();
     }
@@ -55,6 +54,8 @@ public class TablesView implements ITablesView {
         navigationPanel.add(tableNames, navigationConstraints);
         navigationConstraints.gridx = 2;
         navigationPanel.add(addButton, navigationConstraints);
+        navigationConstraints.gridx = 3;
+        navigationPanel.add(removeButton, navigationConstraints);
     }
 
     @Override
@@ -84,6 +85,8 @@ public class TablesView implements ITablesView {
 
     @Override
     public void setTable(AbstractTableDataView tableView) {
-        scrollPane.getViewport().add(tableView);
+        mainPanel.add(tableView, BorderLayout.CENTER);
+        addButton.addActionListener(event -> tableView.addNewRow());
+        removeButton.addActionListener(e -> tableView.removeRow());
     }
 }
