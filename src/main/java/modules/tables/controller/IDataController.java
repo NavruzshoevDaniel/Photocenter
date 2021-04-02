@@ -1,16 +1,16 @@
-package modules.clients.controller;
+package modules.tables.controller;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IClientsController {
+public interface IDataController {
     void getColumnNames();
 
-    void getClientsRows();
+    void getRows();
 
     void updateRow(Map<String, Object> parameters);
 
-    void addNewClient(Map<String, Object> parameters);
+    void addNewData(Map<String, Object> parameters);
 
     void deleteRows(List<Map<String, Object>> listParameters);
 }

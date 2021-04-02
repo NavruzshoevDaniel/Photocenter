@@ -1,9 +1,9 @@
-package modules.clients.view;
+package modules.tables.view;
 
-public interface IClientsView {
+public interface ITableView {
     void init();
 
-    void addClientRow(Object[] clients);
+    void addRow(Object[] clients);
 
     void setColumnName(String columnsName);
 

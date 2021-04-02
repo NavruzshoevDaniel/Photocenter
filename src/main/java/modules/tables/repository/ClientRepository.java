@@ -1,15 +1,16 @@
-package modules.clients.repository;
+package modules.tables.repository;
 
 import commons.jdbc.jpa.util.RepositoryUtil;
+import commons.repository.Repository;
 import lombok.extern.slf4j.Slf4j;
-import modules.clients.entity.Client;
+import modules.tables.entity.Client;
 
 import java.sql.*;
 
 import java.util.List;
 
 @Slf4j
-public class ClientRepository implements IClientsRepository {
+public class ClientRepository implements Repository<Client> {
 
     @Override
     public void add(Client obj) throws SQLException, IllegalAccessException {

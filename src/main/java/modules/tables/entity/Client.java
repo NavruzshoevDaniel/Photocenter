@@ -1,4 +1,4 @@
-package modules.clients.entity;
+package modules.tables.entity;
 
 import commons.jdbc.jpa.annotations.Id;
 import commons.jdbc.jpa.annotations.Table;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Data
 @Table
-public class Client {
+public class Client implements TableData {
     @Id
     private int id;
     private String secondName;

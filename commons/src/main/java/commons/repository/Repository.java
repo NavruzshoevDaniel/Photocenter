@@ -12,4 +12,6 @@ public interface Repository<T> {
     void update(T obj) throws SQLException, IllegalAccessException;
 
     List<T> getAll() throws SQLException;
+
+    List<String> getColumns() throws SQLException;
 }
