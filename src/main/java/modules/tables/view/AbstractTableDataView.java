@@ -15,12 +15,20 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractTableDataView<T extends TableData> extends JPanel
         implements ITableView {
+    private static final String ADDING_PANEL = "Card with adding form";
+    private static final String TABLE_PANEL = "Card with table info";
+
     private final JTable table = new JTable();
-    private final JScrollPane scrollPane = new JScrollPane();
-    private final DefaultTableModel defaultTableModel = new DefaultTableModel();
+    private final JPanel cardPanel = new JPanel(new CardLayout());
+    private final JPanel tableCard = new JPanel(new BorderLayout());
+    private final JPanel addingCard = new JPanel(new BorderLayout());
+
     private final JButton createButton = new JButton("Create");
-    private final JButton backButton = new JButton("Cancel");
-    private final JPanel bottomPanel = new JPanel(new GridLayout());
+    private final JButton cancelButton = new JButton("Cancel");
+    private final JButton addButton = new JButton("Add");
+    private final JButton removeButton = new JButton("Remove");
+
+    protected DefaultTableModel defaultTableModel = new DefaultTableModel();
     protected AbstractTableController<T> abstractTableController;
     private final TableModelListener updateListener;
     protected final EntryFormView formPanel = new EntryFormView(Arrays.asList(1, 2, 1));
@@ -36,19 +44,38 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
 
     private void configUI() {
         setLayout(new BorderLayout());
+        configTableCard();
+        configAddingCard();
+        cardPanel.add(tableCard, TABLE_PANEL);
+        cardPanel.add(addingCard, ADDING_PANEL);
+        add(cardPanel, BorderLayout.CENTER);
+    }
+
+    private void configAddingCard() {
+        JScrollPane addingScrollPane = new JScrollPane();
+        addingScrollPane.getViewport().add(formPanel.getPanelContent());
+        addingCard.add(addingScrollPane, BorderLayout.CENTER);
+        final JPanel bottomPanel = new JPanel(new GridLayout());
+        cancelButton.addActionListener(e -> routeToTableForm());
+        bottomPanel.add(cancelButton);
+        bottomPanel.add(createButton);
+        addingCard.add(bottomPanel, BorderLayout.SOUTH);
+        initEntryForm();
+    }
+
+    private void configTableCard() {
         table.getTableHeader().setBackground(Color.CYAN);
-        table.setModel(defaultTableModel);
         table.getTableHeader().setReorderingAllowed(false);
 
-        scrollPane.getViewport().add(table);
-        bottomPanel.add(backButton);
-        bottomPanel.add(createButton);
-        bottomPanel.setVisible(false);
-
-        add(bottomPanel, BorderLayout.SOUTH);
-        add(scrollPane, BorderLayout.CENTER);
-
-        initEntryForm();
+        final JScrollPane tableScrollPane = new JScrollPane();
+        tableScrollPane.getViewport().add(table);
+        tableCard.add(tableScrollPane, BorderLayout.CENTER);
+        final JPanel bottomPanel = new JPanel(new GridLayout());
+        addButton.addActionListener(e -> routeToAddingForm());
+        removeButton.addActionListener(e -> removeRow());
+        bottomPanel.add(addButton);
+        bottomPanel.add(removeButton);
+        tableCard.add(bottomPanel, BorderLayout.SOUTH);
     }
 
     protected abstract void initEntryForm();
@@ -56,7 +83,7 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     @Override
     public void init() {
         SwingUtilities.invokeLater(this::updateRows);
-        backButton.addActionListener(e -> routeToTableForm());
+        table.setModel(defaultTableModel);
         createButton.addActionListener(e -> {
             final Map<String, Object> values = formPanel.getValues();
             values.put("Id", defaultTableModel.getRowCount() + 1);
@@ -66,17 +93,14 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
         });
     }
 
-    public void addNewRow() {
-        log.info("Try to add");
-        routeToAddingForm();
-    }
-
     public void removeRow() {
         if (table.getSelectedRow() > 0) {
             final int[] selectedRows = table.getSelectedRows();
             List<Map<String, Object>> listParameters = new ArrayList<>();
-            for (int i = 0; i < selectedRows.length; i++) {
-                listParameters.add(readAllColumns(i));
+            log.info("Selected rows:{}", selectedRows);
+            for (int selectedRow : selectedRows) {
+                final Map<String, Object> stringObjectMap = readAllColumns(selectedRow);
+                listParameters.add(stringObjectMap);
             }
             abstractTableController.deleteRows(listParameters);
             updateRows();
@@ -84,6 +108,7 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     }
 
     private void updateRows() {
+        log.info(defaultTableModel.toString());
         defaultTableModel.removeTableModelListener(updateListener);
         defaultTableModel.setRowCount(0);
         defaultTableModel.setColumnCount(0);
@@ -93,15 +118,13 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     }
 
     private void routeToAddingForm() {
-        scrollPane.getViewport().remove(table);
-        bottomPanel.setVisible(true);
-        scrollPane.getViewport().add(formPanel.getPanelContent(), BorderLayout.CENTER);
+        CardLayout cl = (CardLayout) (cardPanel.getLayout());
+        cl.show(cardPanel, ADDING_PANEL);
     }
 
     private void routeToTableForm() {
-        scrollPane.getViewport().removeAll();
-        bottomPanel.setVisible(false);
-        scrollPane.getViewport().add(table, BorderLayout.CENTER);
+        CardLayout cl = (CardLayout) (cardPanel.getLayout());
+        cl.show(cardPanel, TABLE_PANEL);
         formPanel.clearInputData();
         updateRows();
     }
@@ -110,7 +133,6 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     public void addRow(Object[] dataFields) {
         defaultTableModel.addRow(dataFields);
     }
-
 
     @Override
     public void setColumnName(String columnsName) {

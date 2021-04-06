@@ -11,12 +11,11 @@ import java.util.List;
 public class TablesView implements ITablesView {
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new BorderLayout());
-    private final JButton addButton = new JButton("Add");
-    private final JButton removeButton = new JButton("Remove");
     private final JButton menuButton = new JButton("Menu");
     private final JComboBox<String> tableNames = new JComboBox<>();
     private final DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
     private ITablesController tablesController;
+    private JPanel previousTable;
 
     public TablesView(JFrame frame) {
         this.frame = frame;
@@ -31,6 +30,8 @@ public class TablesView implements ITablesView {
         mainPanel.add(navigationPanel, BorderLayout.NORTH);
         frame.setContentPane(mainPanel);
         frame.validate();
+        tableNames.addActionListener(e ->
+                tablesController.getTable(tableNames.getSelectedItem().toString()));
     }
 
     private void configureComboBox() {
@@ -52,10 +53,6 @@ public class TablesView implements ITablesView {
         navigationPanel.add(menuButton, navigationConstraints);
         navigationConstraints.gridx = 1;
         navigationPanel.add(tableNames, navigationConstraints);
-        navigationConstraints.gridx = 2;
-        navigationPanel.add(addButton, navigationConstraints);
-        navigationConstraints.gridx = 3;
-        navigationPanel.add(removeButton, navigationConstraints);
     }
 
     @Override
@@ -85,8 +82,11 @@ public class TablesView implements ITablesView {
 
     @Override
     public void setTable(AbstractTableDataView tableView) {
+        if (previousTable != null) {
+            mainPanel.remove(previousTable);
+        }
+        previousTable = tableView;
         mainPanel.add(tableView, BorderLayout.CENTER);
-        addButton.addActionListener(event -> tableView.addNewRow());
-        removeButton.addActionListener(e -> tableView.removeRow());
+        tableView.updateUI();
     }
 }
