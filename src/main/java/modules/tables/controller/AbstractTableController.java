@@ -11,10 +11,10 @@ import java.util.Map;
 
 @Slf4j
 public abstract class AbstractTableController<T extends TableData> implements IDataController {
-    private final AbstractTableDataView tableDataView;
+    private final AbstractTableDataView<T> tableDataView;
     protected Repository<T> repository;
 
-    protected AbstractTableController(AbstractTableDataView view) {
+    protected AbstractTableController(AbstractTableDataView<T> view) {
         this.tableDataView = view;
     }
 

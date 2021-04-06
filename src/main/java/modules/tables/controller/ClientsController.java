@@ -3,6 +3,7 @@ package modules.tables.controller;
 import lombok.extern.slf4j.Slf4j;
 import modules.tables.entity.Client;
 
+import modules.tables.mapper.Mapper;
 import modules.tables.repository.ClientRepository;
 import modules.tables.view.AbstractTableDataView;
 
@@ -17,6 +18,6 @@ public class ClientsController extends AbstractTableController<Client> implement
 
     @Override
     protected Client createData(Map<String, Object> parameters) {
-        return new Client(parameters);
+        return new Client(new Mapper(parameters));
     }
 }

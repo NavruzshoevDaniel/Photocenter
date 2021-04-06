@@ -1,9 +1,8 @@
 package modules.tables.view;
 
+import commons.view.EntryFormView;
 import modules.tables.controller.JobController;
 import modules.tables.entity.Job;
-
-import javax.swing.table.DefaultTableModel;
 
 public class JobView extends AbstractTableDataView<Job> {
 
@@ -13,9 +12,9 @@ public class JobView extends AbstractTableDataView<Job> {
     }
 
     @Override
-    protected void initEntryForm() {
-        formPanel.addTextField("outlet id");
-        formPanel.addTextField("profession Id");
-        formPanel.addTextField("amount");
+    protected void initEntryForm(EntryFormView formPanel) {
+        this.formPanel.addTextField("outlet id");
+        this.formPanel.addTextField("profession Id");
+        this.formPanel.addTextField("amount");
     }
 }

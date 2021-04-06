@@ -60,7 +60,7 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
         bottomPanel.add(cancelButton);
         bottomPanel.add(createButton);
         addingCard.add(bottomPanel, BorderLayout.SOUTH);
-        initEntryForm();
+        initEntryForm(formPanel);
     }
 
     private void configTableCard() {
@@ -78,7 +78,7 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
         tableCard.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    protected abstract void initEntryForm();
+    protected abstract void initEntryForm(EntryFormView formPanel);
 
     @Override
     public void init() {

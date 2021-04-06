@@ -3,10 +3,10 @@ package modules.tables.entity;
 import commons.jdbc.jpa.annotations.Id;
 import commons.jdbc.jpa.annotations.Table;
 import lombok.Data;
+import modules.tables.mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Table
 @Data
@@ -21,11 +21,11 @@ public class Job implements TableData {
 
     }
 
-    public Job(Map<String, Object> parameters) {
-        id = (int) parameters.get("id");
-        outletId = Integer.parseInt(String.valueOf(parameters.get("outlet id")));
-        professionId =Integer.parseInt(String.valueOf(parameters.get("profession Id")));
-        amount = Integer.parseInt(String.valueOf(parameters.get("amount")));
+    public Job(Mapper parameters) {
+        id = parameters.getInteger("id");
+        outletId = parameters.getInteger("outlet id");
+        professionId = parameters.getInteger("profession Id");
+        amount = parameters.getInteger("amount");
     }
 
     @Override

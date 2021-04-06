@@ -14,6 +14,8 @@ import java.util.Locale;
 
 @Slf4j
 public class TablesController implements ITablesController {
+    private static final String SPACE_SYMBOL = " ";
+    private static final String DELIMITER_PROPERTY_SYMBOL = "_";
     private final ITablesView tablesView;
     private final ITablesRouter tablesRouter = new TablesRouter();
     private final ITablesNamesService tablesNamesService = new TablesNamesService();
@@ -34,13 +36,17 @@ public class TablesController implements ITablesController {
 
     @Override
     public void getTable(String selectedItem) {
+        final String tablePropertyKey = selectedItem
+                .toLowerCase(Locale.ROOT)
+                .replace(SPACE_SYMBOL, DELIMITER_PROPERTY_SYMBOL);
         try {
             final AbstractTableDataView tableView = TableFactory.getInstance()
-                    .createTableView(selectedItem.toLowerCase(Locale.ROOT));
+                    .createTableView(tablePropertyKey);
             tableView.init();
             tablesView.setTable(tableView);
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            log.error(e.getMessage(),e);
+        } catch (ClassNotFoundException | IllegalAccessException
+                | InstantiationException | IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
         }
     }
 }

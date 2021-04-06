@@ -3,10 +3,10 @@ package modules.tables.entity;
 import commons.jdbc.jpa.annotations.Id;
 import commons.jdbc.jpa.annotations.Table;
 import lombok.Data;
+import modules.tables.mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @Data
@@ -24,13 +24,13 @@ public class Client implements TableData {
 
     }
 
-    public Client(Map<String, Object> parameters) {
-        id = (int) parameters.get("id");
-        secondName = (String) parameters.get("second name");
-        firstName = (String) parameters.get("first name");
-        middleName = (String) parameters.get("middle name");
-        isProfessional = (boolean) parameters.get("is professional");
-        discount = (boolean) parameters.get("discount");
+    public Client(Mapper parameters) {
+        id = parameters.getInteger("id");
+        secondName = parameters.getString("second name");
+        firstName = parameters.getString("first name");
+        middleName = parameters.getString("middle name");
+        isProfessional = parameters.getBoolean("is professional");
+        discount = parameters.getBoolean("discount");
     }
 
     public List<Object> toObjects() {
