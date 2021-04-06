@@ -94,7 +94,8 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     }
 
     public void removeRow() {
-        if (table.getSelectedRow() > 0) {
+        log.info("{}", table.getSelectedRow());
+        if (table.getSelectedRow() >= 0) {
             final int[] selectedRows = table.getSelectedRows();
             List<Map<String, Object>> listParameters = new ArrayList<>();
             log.info("Selected rows:{}", selectedRows);
