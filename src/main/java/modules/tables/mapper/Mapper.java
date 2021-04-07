@@ -14,7 +14,7 @@ public class Mapper {
         return Boolean.parseBoolean(String.valueOf(stringObjectMap.get(key)));
     }
 
-    public int getInteger(String key) {
+    public Integer getInteger(String key) {
         return Integer.parseInt(String.valueOf(stringObjectMap.get(key)));
     }
 

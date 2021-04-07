@@ -49,6 +49,7 @@ public class EntryFormView {
         addNumericField(fieldName, spinnerNumberModel);
     }
 
+
     private void addNumericField(String fieldName, SpinnerNumberModel spinnerNumberModel) {
         JSpinner spinner = new JSpinner(spinnerNumberModel);
         JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) spinner.getEditor();
