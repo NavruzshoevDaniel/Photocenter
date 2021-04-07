@@ -17,6 +17,7 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
         implements ITableView {
     private static final String ADDING_PANEL = "Card with adding form";
     private static final String TABLE_PANEL = "Card with table info";
+    private static final int ID_COLUMN_INDEX = 0;
 
     private final JTable table = new JTable();
     private final JPanel cardPanel = new JPanel(new CardLayout());
@@ -28,12 +29,18 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     private final JButton addButton = new JButton("Add");
     private final JButton removeButton = new JButton("Remove");
 
-    protected DefaultTableModel defaultTableModel = new DefaultTableModel();
+    protected DefaultTableModel defaultTableModel;
     protected AbstractTableController<T> abstractTableController;
     private final TableModelListener updateListener;
     protected final EntryFormView formPanel = new EntryFormView(Arrays.asList(1, 2, 1));
 
     protected AbstractTableDataView() {
+        defaultTableModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return getValueAt(0, columnIndex).getClass();
+            }
+        };
         updateListener = event -> {
             int rowIndex = event.getFirstRow();
             abstractTableController.updateRow(readAllColumns(rowIndex));
@@ -86,7 +93,8 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
         table.setModel(defaultTableModel);
         createButton.addActionListener(e -> {
             final Map<String, Object> values = formPanel.getValues();
-            values.put("Id", defaultTableModel.getRowCount() + 1);
+            values.put(table.getColumnName(ID_COLUMN_INDEX),
+                    defaultTableModel.getRowCount() + 1);
             log.info(values.toString());
             abstractTableController.addNewData(values);
             routeToTableForm();

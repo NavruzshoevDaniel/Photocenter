@@ -181,6 +181,7 @@ public final class RepositoryUtil {
         for (Field field : clazz.getDeclaredFields()) {
             field.setAccessible(true);
             Class<?> fieldType = field.getType();
+            log.info(field.getName());
             Object jdbcValue = convert(rst, getFieldColumnName(field), fieldType);
             field.set(object, jdbcValue);
         }

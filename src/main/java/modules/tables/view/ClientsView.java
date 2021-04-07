@@ -14,15 +14,6 @@ public class ClientsView extends AbstractTableDataView<Client> {
     public ClientsView() {
         super();
         abstractTableController = new ClientsController(this);
-        this.defaultTableModel = new DefaultTableModel() {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex==4||columnIndex==5) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(columnIndex);
-            }
-        };
     }
 
     @Override
