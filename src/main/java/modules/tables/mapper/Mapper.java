@@ -1,5 +1,6 @@
 package modules.tables.mapper;
 
+import java.sql.Date;
 import java.util.Map;
 
 public class Mapper {
@@ -23,5 +24,9 @@ public class Mapper {
 
     public String getString(String key) {
         return String.valueOf(stringObjectMap.get(key));
+    }
+
+    public Date getDate(String key) {
+        return Date.valueOf(String.valueOf(stringObjectMap.get(key)));
     }
 }

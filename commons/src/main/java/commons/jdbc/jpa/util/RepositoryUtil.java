@@ -48,10 +48,7 @@ public final class RepositoryUtil {
         String query = String.format(UPDATE_TEMPLATE, getTableName(clazz),
                 stringBuilder.toString(), createWhereIds(data));
         try (PreparedStatement statement = SessionFactory.getInstance().prepareStatement(query)) {
-            for (int i = 1; i <= fields.length; i++) {
-                fields[i - 1].setAccessible(true);
-                statement.setObject(i, fields[i - 1].get(data));
-            }
+            prepareStatement(data, fields, statement);
             log.info(query);
             statement.executeUpdate();
         }
@@ -71,11 +68,20 @@ public final class RepositoryUtil {
                 String.format(INSERT_TEMPLATE, getTableName(clazz), stringBuilder.toString());
         try (final PreparedStatement statement =
                      SessionFactory.getInstance().prepareStatement(insertQuery)) {
-            for (int i = 1; i <= fields.length; i++) {
-                fields[i - 1].setAccessible(true);
+            prepareStatement(data, fields, statement);
+            statement.execute();
+        }
+    }
+
+    private static <T> void prepareStatement(T data, Field[] fields, PreparedStatement statement)
+            throws SQLException, IllegalAccessException {
+        for (int i = 1; i <= fields.length; i++) {
+            fields[i - 1].setAccessible(true);
+            if (fields[i - 1].get(data) == Date.class) {
+                statement.setDate(i, (Date) fields[i - 1].get(data));
+            } else {
                 statement.setObject(i, fields[i - 1].get(data));
             }
-            statement.execute();
         }
     }
 
@@ -212,6 +218,8 @@ public final class RepositoryUtil {
             return resultSet.getByte(columnName);
         } else if (fieldType == char.class) {
             return Character.class;
+        } else if (fieldType == Date.class) {
+            return resultSet.getDate(columnName);
         } else {
             return resultSet.getObject(columnName);
         }

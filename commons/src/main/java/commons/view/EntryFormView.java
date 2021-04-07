@@ -39,8 +39,17 @@ public class EntryFormView {
         checkBoxes.put(processedName, checkBox);
     }
 
-    public void addNumericField(String fieldName) {
-        SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(0.0, null, null, 1);
+    public void addNumericField(String fieldName, int initNumber) {
+        SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(initNumber, null, null, 1);
+        addNumericField(fieldName, spinnerNumberModel);
+    }
+
+    public void addNumericField(String fieldName, double initNumber) {
+        SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(initNumber, null, null, 1);
+        addNumericField(fieldName, spinnerNumberModel);
+    }
+
+    private void addNumericField(String fieldName, SpinnerNumberModel spinnerNumberModel) {
         JSpinner spinner = new JSpinner(spinnerNumberModel);
         JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) spinner.getEditor();
         spinnerEditor.getTextField().setHorizontalAlignment(SwingConstants.LEFT);

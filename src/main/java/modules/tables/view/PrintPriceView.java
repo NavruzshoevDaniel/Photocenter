@@ -12,8 +12,8 @@ public class PrintPriceView extends AbstractTableDataView<PrintPrice> {
 
     @Override
     protected void initEntryForm(EntryFormView formPanel) {
-        formPanel.addNumericField("Paper size id");
-        formPanel.addNumericField("Paper type id");
-        formPanel.addNumericField("Price");
+        formPanel.addNumericField("Paper size id", 0);
+        formPanel.addNumericField("Paper type id", 0);
+        formPanel.addNumericField("Price", 0);
     }
 }

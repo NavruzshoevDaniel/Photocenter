@@ -12,7 +12,7 @@ public class PrintDiscountView extends AbstractTableDataView<PrintDiscount> {
 
     @Override
     protected void initEntryForm(EntryFormView formPanel) {
-        formPanel.addNumericField("Photo amount");
-        formPanel.addNumericField("Discount");
+        formPanel.addNumericField("Photo amount", 0);
+        formPanel.addNumericField("Discount", 0);
     }
 }
