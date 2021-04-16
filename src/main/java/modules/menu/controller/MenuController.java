@@ -18,4 +18,9 @@ public class MenuController implements IMenuController {
     public void routeToTables() {
         menuRoute.routeToTables(view.getJFrame());
     }
+
+    @Override
+    public void routeToQueries() {
+        menuRoute.routeToQuarries(view.getJFrame());
+    }
 }

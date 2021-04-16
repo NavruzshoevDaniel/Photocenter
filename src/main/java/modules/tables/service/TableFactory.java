@@ -1,39 +1,36 @@
 package modules.tables.service;
 
+import commons.view.factory.ViewFactory;
 import lombok.extern.slf4j.Slf4j;
 import modules.tables.view.AbstractTableDataView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Slf4j
-public class TableFactory {
-    private static final String CONFIG_TABLE_FILE = "/tables.properties";
-
-    private final Properties tablesProperty = new Properties();
+public class TableFactory extends ViewFactory {
+    private static final Path CONFIG_TABLE_FILE = Paths.get("tables.properties");
 
     private TableFactory() {
-        try (InputStream resourceAsStream = TableFactory.class.getResourceAsStream(CONFIG_TABLE_FILE)) {
-            tablesProperty.load(resourceAsStream);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new IllegalArgumentException("No config file:" + CONFIG_TABLE_FILE);
-        }
+        super();
+    }
 
+    @Override
+    protected Path getConfigPath() {
+        return CONFIG_TABLE_FILE;
     }
 
     public static TableFactory getInstance() {
         return Handle.INSTANCE;
     }
 
-    public AbstractTableDataView createTableView(String tableName) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public AbstractTableDataView<?> createView(String tableName) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         final String property = tablesProperty.getProperty(tableName);
         if (property == null) {
             throw new IllegalArgumentException("No such table:" + tableName);
         }
         final Class<?> tableClass = Class.forName(property);
-        return (AbstractTableDataView) tableClass.newInstance();
+        return (AbstractTableDataView<?>) tableClass.newInstance();
     }
 
     private static class Handle {

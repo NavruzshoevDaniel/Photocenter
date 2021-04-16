@@ -40,8 +40,7 @@ public class TablesController implements ITablesController {
                 .toLowerCase(Locale.ROOT)
                 .replace(SPACE_SYMBOL, DELIMITER_PROPERTY_SYMBOL);
         try {
-            final AbstractTableDataView tableView = TableFactory.getInstance()
-                    .createTableView(tablePropertyKey);
+            final AbstractTableDataView<?> tableView = TableFactory.getInstance().createView(tablePropertyKey);
             tableView.init();
             tablesView.setTable(tableView);
         } catch (ClassNotFoundException | IllegalAccessException

@@ -18,7 +18,7 @@ public class MenuView implements IMenuView {
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new GridLayout(ROWS_AMOUNT,COLUMNS_AMOUNT));
     private final JButton queriesButton = new JButton("Queries");
-    private final JButton clientsButton = new JButton("Tables");
+    private final JButton tablesButton = new JButton("Tables");
     private final JButton initButton = new JButton("Init data");
     private final InitializerService initializerService = new InitializerServiceImpl();
     private IMenuController controller;
@@ -32,7 +32,7 @@ public class MenuView implements IMenuView {
     }
 
     private void addActionListeners() {
-        clientsButton.addActionListener(e -> SwingUtilities.invokeLater(() -> controller.routeToTables()));
+        tablesButton.addActionListener(e  -> controller.routeToTables());
         initButton.addActionListener(e -> {
             try {
                 initializerService.initPhotocenterData();
@@ -41,11 +41,12 @@ public class MenuView implements IMenuView {
                 JOptionPane.showMessageDialog(mainPanel.getRootPane(), ex.getMessage());
             }
         });
+        queriesButton.addActionListener(e-> controller.routeToQueries());
     }
 
     private void addButtonsToPanel() {
         mainPanel.add(queriesButton);
-        mainPanel.add(clientsButton);
+        mainPanel.add(tablesButton);
         mainPanel.add(initButton);
     }
 
