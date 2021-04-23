@@ -5,16 +5,17 @@ import commons.sqlbuilder.predicates.PredicateUtil;
 
 import java.util.function.BiFunction;
 
-public enum Operations {
+public enum Operation {
     EQUAL(PredicateUtil::equals),
     GREATER_EQUALS(PredicateUtil::greaterOrEquals),
     LESS_EQUALS(PredicateUtil::lessOrEquals),
     IN(PredicateUtil::in),
-    CONTAINS(PredicateUtil::contains);
+    CONTAINS(PredicateUtil::contains),
+    LIKE(PredicateUtil::like);
 
     private final BiFunction<String, Object, Predicate> predicateBiFunction;
 
-    Operations(BiFunction<String, Object, Predicate> predicateBiFunction) {
+    Operation(BiFunction<String, Object, Predicate> predicateBiFunction) {
         this.predicateBiFunction = predicateBiFunction;
     }
 

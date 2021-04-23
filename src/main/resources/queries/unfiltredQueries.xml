@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="query_first">SELECT
+        O.ID AS OUTLET_ID,
+        NAME AS TYPE,
+        ADDRESS,
+        RO.RELATED_OUTLET_ID
+        FROM
+        OUTLETS O
+        JOIN OUTLET_TYPES OT ON O.TYPE_ID = OT.ID
+        JOIN RELATED_OUTLETS RO on O.ID = RO.OUTLET_ID
+    </entry>
+</properties>

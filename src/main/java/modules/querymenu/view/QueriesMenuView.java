@@ -12,7 +12,7 @@ public class QueriesMenuView implements IQueriesMenuView {
     private static final int CELL_HEIGHT = 40;
     private final JFrame frame;
     private final JPanel quarriesPanel = new JPanel(new BorderLayout());
-    private final JButton backButton = new JButton("Back");
+    private final JButton backButton = new JButton("Назад");
     private final DefaultListModel<String> listModel = new DefaultListModel<>();
     private final JList<String> quarries = new JList<>(listModel);
     private IQueriesMenuController controller;

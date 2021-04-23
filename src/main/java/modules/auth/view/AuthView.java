@@ -18,12 +18,12 @@ public class AuthView implements IAuthView {
     private final JFrame frame;
     private final JPanel authViewPanel = new JPanel();
     private final JLabel ipLabel = new JLabel("IP");
-    private final JLabel portLabel = new JLabel("Port");
-    private final JLabel loginLabel = new JLabel("User");
-    private final JLabel passwordLabel = new JLabel("Password");
+    private final JLabel portLabel = new JLabel("Порт");
+    private final JLabel loginLabel = new JLabel("Логин");
+    private final JLabel passwordLabel = new JLabel("Пароль");
     private final JTextField loginField = new JTextField(DEFAULT_BD_USERNAME);
     private final JTextField passwordField = new JPasswordField(DEFAULT_BD_PASSWORD);
-    private final JButton connectButton = new JButton("Connect");
+    private final JButton connectButton = new JButton("Подключиться");
     private final JFormattedTextField ipField;
     private final JFormattedTextField portField;
     private IAuthController authController;

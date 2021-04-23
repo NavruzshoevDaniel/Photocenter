@@ -1,6 +1,5 @@
 package commons.view.filters;
 
-import commons.view.PropotionalRowPanel;
 
 import javax.swing.*;
 import java.util.List;
@@ -30,13 +29,13 @@ public class NumberFormFilter extends AbstractFormFilter {
     }
 
     @Override
-    protected void configureUI(PropotionalRowPanel panel) {
+    protected JComponent initFilterForm() {
         numberSpinner = new JSpinner();
-        panel.initRow(filterNameLabel, numberSpinner);
+        return numberSpinner;
     }
 
     @Override
-    protected Object getFilterParam() {
+    public Object getValue() {
         return numberSpinner.getValue();
     }
 }

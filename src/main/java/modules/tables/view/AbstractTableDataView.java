@@ -24,10 +24,10 @@ public abstract class AbstractTableDataView<T extends TableData> extends JPanel
     private final JPanel tableCard = new JPanel(new BorderLayout());
     private final JPanel addingCard = new JPanel(new BorderLayout());
 
-    private final JButton createButton = new JButton("Create");
-    private final JButton cancelButton = new JButton("Cancel");
-    private final JButton addButton = new JButton("Add");
-    private final JButton removeButton = new JButton("Remove");
+    private final JButton createButton = new JButton("Создать");
+    private final JButton cancelButton = new JButton("Отмена");
+    private final JButton addButton = new JButton("Добавить");
+    private final JButton removeButton = new JButton("Удалить");
 
     protected DefaultTableModel defaultTableModel;
     protected AbstractTableController<T> abstractTableController;

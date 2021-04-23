@@ -17,9 +17,9 @@ public class MenuView implements IMenuView {
     private static final int COLUMNS_AMOUNT = 1;
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new GridLayout(ROWS_AMOUNT,COLUMNS_AMOUNT));
-    private final JButton queriesButton = new JButton("Queries");
-    private final JButton tablesButton = new JButton("Tables");
-    private final JButton initButton = new JButton("Init data");
+    private final JButton queriesButton = new JButton("Запросы");
+    private final JButton tablesButton = new JButton("Таблицы");
+    private final JButton initButton = new JButton("Инициализация данных");
     private final InitializerService initializerService = new InitializerServiceImpl();
     private IMenuController controller;
 

@@ -1,6 +1,5 @@
 package commons.view.filters;
 
-import commons.view.PropotionalRowPanel;
 
 import javax.swing.*;
 
@@ -18,13 +17,13 @@ public class CheckBoxFormFilter extends AbstractFormFilter {
     }
 
     @Override
-    protected void configureUI(PropotionalRowPanel panel) {
+    protected JComponent initFilterForm() {
         checkBox = new JCheckBox();
-        panel.initRow(filterNameLabel, checkBox);
+        return checkBox;
     }
 
     @Override
-    protected Object getFilterParam() {
+    public Object getValue() {
         return checkBox.isSelected();
     }
 }

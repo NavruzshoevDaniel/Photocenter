@@ -3,12 +3,13 @@ package modules.quarries.mappers;
 import lombok.Getter;
 
 @Getter
-public enum PointsOrderingQueryMapper1 implements IQueryMapper {
-    OUTLET_TYPE("Outlet type", "OUTLET_TYPES.ID");
+public enum PointsOrderingMapper implements IQueryMapper {
+    OUTLET_TYPE("Тип торговой точки", "NAME");
     private final String viewPresentation;
     private final String sqlExpression;
 
-    PointsOrderingQueryMapper1(String viewPresentation, String sqlExpression) {
+
+    PointsOrderingMapper(String viewPresentation, String sqlExpression) {
         this.viewPresentation = viewPresentation;
         this.sqlExpression = sqlExpression;
     }

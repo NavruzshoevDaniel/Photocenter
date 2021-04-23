@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IFilterQueryController {
 
-    void postSearchCriteria(List<SearchCriteria> searchCriteria, IQueryMapper queryMapper);
+    void postSearchCriteria(List<SearchCriteria> searchCriteria);
 }

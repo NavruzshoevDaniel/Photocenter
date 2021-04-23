@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CriteriaBuilder extends AbstractSqlBuilder {
+    private final boolean whereExists = true;
     private final List<String> wheres = new ArrayList<>();
 
     public CriteriaBuilder where(String expr) {
@@ -14,7 +15,12 @@ public class CriteriaBuilder extends AbstractSqlBuilder {
     @Override
     public String toString() {
         StringBuilder sql = new StringBuilder();
-        appendList(sql, wheres, " where ", " and ");
+        if (whereExists) {
+            appendList(sql, wheres, " where ", " and ");
+        } else {
+            appendList(sql, wheres, " and ", " and ");
+        }
+
         return sql.toString();
     }
 }

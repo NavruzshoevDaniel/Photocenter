@@ -11,7 +11,7 @@ import java.util.List;
 public class TablesView implements ITablesView {
     private final JFrame frame;
     private final JPanel mainPanel = new JPanel(new BorderLayout());
-    private final JButton menuButton = new JButton("Menu");
+    private final JButton menuButton = new JButton("Меню");
     private final JComboBox<String> tableNames = new JComboBox<>();
     private final DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
     private ITablesController tablesController;

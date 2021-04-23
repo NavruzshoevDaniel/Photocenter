@@ -16,6 +16,7 @@ public class Main extends JFrame {
             JFrame mainFrame = new JFrame(PROJECT_NAME);
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             mainFrame.setLocationRelativeTo(null);
+            MainFrame.setMainFrame(mainFrame);
             IAuthView authView = new AuthView(mainFrame);
             IAuthController authController = new AuthController(authView);
             authView.setAuthController(authController);

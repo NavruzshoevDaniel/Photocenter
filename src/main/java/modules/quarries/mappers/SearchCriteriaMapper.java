@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 public class SearchCriteriaMapper {
 
     public static Predicate convert(SearchCriteria criteria) {
-        String key = criteria.getKey();
+        String key = criteria.getKey().getSqlExpression();
         Object value = criteria.getValue();
         return criteria.getOperation().apply(key, value);
     }

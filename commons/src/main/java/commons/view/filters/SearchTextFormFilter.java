@@ -1,6 +1,5 @@
 package commons.view.filters;
 
-import commons.view.PropotionalRowPanel;
 
 import javax.swing.*;
 import java.util.List;
@@ -14,13 +13,13 @@ public class SearchTextFormFilter extends AbstractFormFilter {
     }
 
     @Override
-    protected void configureUI(PropotionalRowPanel panel) {
+    protected JComponent initFilterForm() {
         searchTextField = new JTextField();
-        panel.initRow(filterNameLabel, searchTextField);
+        return searchTextField;
     }
 
     @Override
-    protected Object getFilterParam() {
-        return searchTextField.getText();
+    public Object getValue() {
+        return searchTextField.getText().trim();
     }
 }
